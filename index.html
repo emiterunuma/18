@@ -3,188 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クラス連絡</title>
+<title>クラス連絡＋おみくじ＋名言＋ゲーム＋写真投稿</title>
 <style>
 body {
   box-sizing: border-box;
   font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
   margin: 0;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100%;
+  background-color: #f3fff8;
+  min-height: 100vh;
   color: #333;
-}
-html {
-  height: 100%;
 }
 .container {
   max-width: 900px;
   margin: 0 auto;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 .header {
-  background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
+  background-color: #ffd6e0; /* パステルピンク */
+  color: #444;
   padding: 30px 20px;
   text-align: center;
 }
 .header h1 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
 }
 .header .bible-text {
   margin-top: 8px;
-  color: black;
+  color: #555;
   font-size: 16px;
-  line-height: 1.5;
 }
 .main-content {
   display: flex;
   flex-wrap: wrap;
-  height: auto;
 }
+
+/* 日付＋おみくじボタンをまとめる */
 .date-buttons {
   padding: 20px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   flex: 1;
-  border-right: 2px solid #e1e8ff;
   min-width: 260px;
+  border-right: 2px solid #eaeaea;
 }
-.date-row {
+
+/* 横並びで均等幅 */
+.button-row {
   display: flex;
   gap: 8px;
-  align-items: center;
 }
-/* 🌿 日付ボタン */
-.date-button {
-  background: linear-gradient(45deg, #81C784 0%, #4CAF50 100%);
-  color: white;
+button {
   border: none;
-  padding: 16px 20px;
   border-radius: 12px;
+  padding: 14px 0;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-  flex: 1;
+  transition: all 0.25s ease;
+  flex: 1;               /* 横幅均等 */
+  text-align: center;    /* 文字中央寄せ */
 }
-.date-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-}
-/* 🍊 おみくじボタン */
+
+/* 🍋 おみくじボタン（パステルイエロー） */
 .omikuji-button {
-  background: linear-gradient(45deg, #ff9500 0%, #ff6a00 100%);
-  color: white;
-  border: none;
-  padding: 16px 20px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
-  text-align: center;
-  width: 100%;
+  background-color: #fff9b1;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(255, 249, 177, 0.4);
 }
 .omikuji-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 149, 0, 0.4);
+  box-shadow: 0 6px 14px rgba(255, 249, 177, 0.5);
 }
-/* おみくじ結果表示 */
+
+/* 🩵 日付ボタン */
+.date-button {
+  background-color: #cce5ff;
+  color: #333;
+  box-shadow: 0 3px 10px rgba(204, 229, 255, 0.4);
+}
+.date-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(204, 229, 255, 0.5);
+}
+
+/* 🧁 おみくじ結果 */
 .omikuji-result {
   margin-top: 8px;
-  padding: 10px;
-  background: #fff7e6;
+  padding: 12px;
+  background-color: #fff8dc;
+  border-left: 4px solid #ffd580;
   border-radius: 8px;
-  border-left: 4px solid #ff9500;
   font-size: 14px;
   text-align: center;
   display: none;
 }
+
+/* 📅 スケジュール */
 .schedule-display {
   flex: 1;
   margin: 20px;
   padding: 20px;
-  background: #f8f9ff;
-  border-radius: 12px;
-  border-left: 4px solid #4facfe;
+  background-color: #ede7f6;
+  border-radius: 15px;
+  border-left: 5px solid #b39ddb;
   display: none;
-  animation: fadeIn 0.3s ease;
 }
-.schedule-display.show {
-  display: block;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.schedule-display.show { display: block; }
 .schedule-date {
   font-size: 18px;
-  font-weight: 600;
-  color: #4facfe;
+  font-weight: 700;
+  color: #5e35b1;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e1e8ff;
+  border-bottom: 2px dashed #d1c4e9;
 }
 .schedule-content {
   font-size: 15px;
   line-height: 1.6;
-  color: #555;
+  color: #444;
 }
 .change-item {
   margin: 8px 0;
   padding: 8px 12px;
   background: white;
   border-radius: 8px;
-  border-left: 3px solid #f5576c;
+  border-left: 3px solid #ffb6b9;
 }
-/* 🎯 バッジコンテナ */
-.badge-container {
+
+/* 🎓 今日の名言 */
+.quote-box {
+  margin: 25px auto;
+  background-color: #fff9e6;
+  border-left: 4px solid #ffda79;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-size: 15px;
+  text-align: center;
+  max-width: 90%;
+}
+
+/* ⚡ 反射神経ゲーム */
+.reaction-box {
+  margin: 25px auto;
+  text-align: center;
+}
+.reaction-screen {
+  width: 200px;
+  height: 200px;
+  background-color: #d1f7ff;
+  border-radius: 50%;
+  margin: 15px auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin: 30px 0;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* 📷 写真投稿欄 */
+.photo-section {
+  margin: 30px auto;
+  text-align: center;
+}
+.photo-gallery {
+  display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
 }
-/* 縦画面では縦並び */
-@media (orientation: portrait) {
-  .badge-container { flex-direction: column; }
+.photo-gallery img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
-/* 横画面では横並び */
-@media (orientation: landscape) {
-  .badge-container { flex-direction: row; }
+
+/* レスポンシブ */
+@media (max-width: 700px) {
+  .main-content {
+    flex-direction: column;
+  }
+  .date-buttons {
+    border-right: none;
+    border-bottom: 2px solid #eaeaea;
+  }
 }
 </style>
 </head>
 <body>
 <main class="container">
   <header class="header">
-    <h1 style="margin: 0;">11月11日（火）</h1>
-    <div class="bible-text">
-      <div>Peace Truth LOVE</div>
-    </div>
+    <h1>11月11日（火）</h1>
+    <div class="bible-text">Peace Truth LOVE</div>
   </header>
 
   <div class="main-content">
     <section class="date-buttons">
-      <!-- 🍊 おみくじボタン＋結果 -->
-      <div class="date-row">
-        <button class="omikuji-button" onclick="drawOmikuji()">おみくじ　1日2回</button>
+      <div class="button-row">
+        <button id="omikujiBtn" class="omikuji-button" onclick="drawOmikuji()">おみくじ</button>
       </div>
       <div id="omikujiResult" class="omikuji-result"></div>
 
-      <!-- 🌿 日付ボタン -->
-      <div class="date-row"><button class="date-button" onclick="showSchedule('today')">本日</button></div>
-      <div class="date-row"><button class="date-button" onclick="showSchedule('tomorrow')">明日</button></div>
-      <div class="date-row"><button class="date-button" onclick="showSchedule('following')">明後日</button></div>
+      <div class="button-row">
+        <button class="date-button" onclick="showSchedule('today')">本日</button>
+        <button class="date-button" onclick="showSchedule('tomorrow')">明日</button>
+        <button class="date-button" onclick="showSchedule('following')">明後日</button>
+      </div>
     </section>
 
     <div id="scheduleDisplay" class="schedule-display">
@@ -192,17 +227,38 @@ html {
       <div id="scheduleContent" class="schedule-content"></div>
     </div>
   </div>
+
+  <section class="quote-box" id="quoteBox"></section>
+
+  <section class="reaction-box">
+    <h3>⚡ 反射神経チャレンジ</h3>
+    <div id="reactionScreen" class="reaction-screen">スタート</div>
+    <div id="reactionResult"></div>
+  </section>
+
+  <section class="photo-section">
+    <h3>📸 今日の一枚</h3>
+    <input type="file" accept="image/*" id="photoInput">
+    <div class="photo-gallery" id="photoGallery"></div>
+  </section>
+
 </main>
 
 <script>
+/* ========== スケジュール関連 ========== */
 const scheduleData = {
-  'today': {
-    date: '11月11日(火)',
-    content:  '<div class="change-item">趣味は勉強、特技はテスト</div><div class="change-item">来週の今日から後期中間試験です</div><div class="change-item">7限：数学講習</div>' },
+  'today': { date: '11月11日(火)', content: '<div class="change-item">来週の今日から後期中間試験です</div><div class="change-item">7限：数学講習</div>' },
   'tomorrow': { date: '11月12日(水)', content: '<div class="change-item">3限：体育</div>' },
-  'following': { date: '11月13日(木)', content: '<div class="change-item">県民の日！たくさん勉強しましょう！</div>' }
+  'following': { date: '11月13日(木)', content: '<div class="change-item">県民の日</div>' }
 };
+function showSchedule(key) {
+  const d = document.getElementById('scheduleDisplay');
+  document.getElementById('scheduleDate').textContent = scheduleData[key].date;
+  document.getElementById('scheduleContent').innerHTML = scheduleData[key].content;
+  d.classList.add('show');
+}
 
+/* ========== おみくじ関連（効果音・1日2回制限） ========== */
 const omikujiResults = [
   {name: '凶', text: '水鉄砲で撃たれる'},
   {name: '吉', text: '隕石に注意'},
@@ -211,77 +267,88 @@ const omikujiResults = [
   {name: '中吉', text: '脳みそ絶対零度'},
   {name: '大吉', text: '照沼と睨めっこ'}
 ];
+const omikujiAudio = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3');
 
-// 🗓 今日の日付キー
-function getTodayKey() {
-  const today = new Date();
-  return today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
-}
-
-// 🔸 抽選回数を取得
-function getDrawCount() {
-  const key = getTodayKey();
-  const data = JSON.parse(localStorage.getItem('omikujiCount')) || {};
-  return data[key] || 0;
-}
-
-// 🔸 回数を増やす
-function incrementDrawCount() {
-  const key = getTodayKey();
-  const data = JSON.parse(localStorage.getItem('omikujiCount')) || {};
-  data[key] = (data[key] || 0) + 1;
-  localStorage.setItem('omikujiCount', JSON.stringify(data));
-}
-
-// 🔸 2回目の結果を保存・取得
-function getSecondResult() {
-  const key = getTodayKey() + '-secondResult';
-  return JSON.parse(localStorage.getItem(key));
-}
-function setSecondResult(result) {
-  const key = getTodayKey() + '-secondResult';
-  localStorage.setItem(key, JSON.stringify(result));
-}
-
-// 🍊 おみくじ本体
 function drawOmikuji() {
-  const count = getDrawCount();
-  const resultBox = document.getElementById('omikujiResult');
-  resultBox.style.display = 'block';
+  const today = new Date().toLocaleDateString();
+  let omikujiCount = parseInt(localStorage.getItem('omikujiCountDate') || '0', 10);
+  let lastDate = localStorage.getItem('omikujiDate') || '';
 
-  if (count === 0) {
-    // 1回目
-    const r = Math.floor(Math.random() * omikujiResults.length);
-    const result = omikujiResults[r];
-    resultBox.innerHTML = `今日の運勢：<strong>${result.name}</strong><br>${result.text}`;
-    incrementDrawCount();
-  } else if (count === 1) {
-    // 2回目（保存）
-    const r = Math.floor(Math.random() * omikujiResults.length);
-    const result = omikujiResults[r];
-    setSecondResult(result);
-    resultBox.innerHTML = `今日の運勢：<strong>${result.name}</strong><br>${result.text}`;
-    incrementDrawCount();
-  } else {
-    // 3回目以降 → 2回目の結果を固定表示
-    const saved = getSecondResult();
-    if (saved) {
-      resultBox.innerHTML = `今日の運勢：<strong>${saved.name}</strong><br>${saved.text}`;
-    } else {
-      resultBox.innerHTML = "（2回目の結果がありません）";
-    }
+  if(lastDate !== today){
+    omikujiCount = 0; // 日付が変わればリセット
   }
+
+  if(omikujiCount >= 2){
+    alert('今日のおみくじは2回までです');
+    return;
+  }
+
+  localStorage.setItem('omikujiDate', today);
+  localStorage.setItem('omikujiCountDate', omikujiCount + 1);
+
+  omikujiAudio.currentTime = 0;
+  omikujiAudio.play();
+
+  const resultBox = document.getElementById('omikujiResult');
+  const result = omikujiResults[Math.floor(Math.random() * omikujiResults.length)];
+  resultBox.style.display = 'block';
+  resultBox.innerHTML = `今日の運勢：<strong>${result.name}</strong><br>${result.text}`;
 }
 
-// 🌿 スケジュール表示
-function showSchedule(key) {
-  const d = document.getElementById('scheduleDisplay');
-  const dd = document.getElementById('scheduleDate');
-  const c = document.getElementById('scheduleContent');
-  dd.textContent = scheduleData[key].date;
-  c.innerHTML = scheduleData[key].content;
-  d.classList.add('show');
-}
+/* ========== 今日の名言 ========== */
+const quotes = [
+  '"The future starts today, not tomorrow." – John Paul II',
+  '"失敗は成功の母である" – 日本のことわざ',
+  '"Do what you can, with what you have, where you are." – Theodore Roosevelt',
+  '"継続は力なり" – Japanese proverb',
+  '"Believe you can and you’re halfway there." – Roosevelt'
+];
+document.getElementById('quoteBox').textContent = quotes[Math.floor(Math.random()*quotes.length)];
+
+/* ========== 反射神経ゲーム ========== */
+let waiting = false, startTime;
+const screen = document.getElementById('reactionScreen');
+const resultDiv = document.getElementById('reactionResult');
+
+screen.addEventListener('click', () => {
+  if (!waiting && screen.textContent === 'スタート') {
+    screen.textContent = '準備中…';
+    screen.style.backgroundColor = '#ffd6e0';
+    waiting = true;
+    setTimeout(() => {
+      screen.textContent = '今！';
+      screen.style.backgroundColor = '#b3ffd6';
+      startTime = new Date();
+    }, Math.random() * 2000 + 1000);
+  } else if (waiting && screen.textContent === '今！') {
+    const time = new Date() - startTime;
+    resultDiv.textContent = `反応時間：${time} ms`;
+    screen.textContent = 'スタート';
+    screen.style.backgroundColor = '#d1f7ff';
+    waiting = false;
+  } else if (waiting) {
+    resultDiv.textContent = '早すぎ！💦';
+    screen.textContent = 'スタート';
+    screen.style.backgroundColor = '#d1f7ff';
+    waiting = false;
+  }
+});
+
+/* ========== 写真投稿欄 ========== */
+const input = document.getElementById('photoInput');
+const gallery = document.getElementById('photoGallery');
+input.addEventListener('change', (e) => {
+  const files = e.target.files;
+  for (const file of files) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = document.createElement('img');
+      img.src = event.target.result;
+      gallery.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+});
 </script>
 </body>
 </html>
