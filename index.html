@@ -89,8 +89,38 @@ body {
   align-items:center; margin-top:30px;
 }
 #gallery {
-  display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
-  gap:12px; margin-top:20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* iPhoneで3列固定 */
+  gap: 10px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.card {
+  width: 110px;       /* 固定幅 */
+  height: 150px;      /* 固定高さ */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.card img {
+  width: 100px;       /* 固定サイズ */
+  height: 100px;      /* 正方形で統一 */
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #555;
+  margin-top: 4px;
+  text-align: center;
+  white-space: pre-line;
 }
 .card {
   border:1px solid #ddd; border-radius:8px;
