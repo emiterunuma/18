@@ -152,67 +152,59 @@ button {
   cursor:pointer; padding:8px 12px; border-radius:6px; border:1px solid #bbb; background:#f7f7f7;
 }
 
-/* じゃんけんアニメーション */
-@keyframes rpsCallAnim {
-  0% { transform: scale(1); opacity:0; }
-  50% { transform: scale(1.5); opacity:1; }
-  100% { transform: scale(1); opacity:1; }
-}
-#rpsCall.animate {
-  animation: rpsCallAnim 0.8s ease forwards !important;
-}
-/* じゃんけんボタン */
-.rpsChoice {
-  padding:10px 20px; margin:5px;
-  font-size:16px; border-radius:8px; border:none;
-  background:#ffb2d8 !important; color:white;
-  cursor:pointer; transition:transform 0.2s, box-shadow 0.2s;
-}
-.rpsChoice:hover {
-  transform: scale(1.1);
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-}
-/* じゃんけん中央配置 */
-.rps-container {
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center; margin:30px 0;
-}
-#rpsButtons {
-  display:flex; gap:10px; justify-content:center; margin-top:10px;
-}
-#rpsCall {
-  font-size:24px; font-weight:bold; margin:10px 0;
+
+#memory-game {
+  margin-top:40px;
+  text-align:center;
 }
 
-.frame {
-  border: 3px solid #4CAF50;      /* 緑の枠線 */
-  border-radius: 12px;            /* 角丸 */
-  padding: 20px;
-  width: 300px;
-  text-align: center;
-  background-color: #f9f9f9;      /* 背景色 */
-  box-shadow: 3px 3px 10px rgba(0,0,0,0.2); /* 軽い影 */
+#memory-game #game-board {
+  width: min(500px, 90%);
   margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
-#rpsButtons button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+#memory-game .card {
+  background: #2d89ef;
+  height: 110px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+#memory-game .card.flipped,
+#memory-game .card.matched {
+  background: #fff;
+  color: #333;
+  cursor: default;
+}
+
+#memory-game #restart {
+  padding: 12px 24px;
+  font-size: 18px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
-#rpsCall.animate {
-  animation: shake 0.5s ease;
+#memory-game #ranking {
+  width: min(500px, 95%);
+  margin: 40px auto;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
 }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+#memory-game .rank-item {
+  padding: 4px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 
@@ -251,20 +243,16 @@ button {
     </div>
   </div>
 
-  <!-- じゃんけんゲーム -->
- <div id="rpsFrame" class="frame">
-  <h2></h2>
-  <p id="rpsCall">じゃんけん</p>
-  <div id="rpsButtons" style="display:none;">
-    <button class="rpsChoice" data-choice="グー">グー</button>
-    <button class="rpsChoice" data-choice="チョキ">チョキ</button>
-    <button class="rpsChoice" data-choice="パー">パー</button>
+<section id="memory-game">
+  <h1>神経衰弱ゲーム</h1>
+  <p id="status">カードをめくってペアを探そう！</p>
+  <div id="game-board"></div>
+  <button id="restart">リスタート</button>
+  <div id="ranking">
+    <h2>ランキング（上位10名）</h2>
+    <div id="ranking-list">読み込み中…</div>
   </div>
-  <p id="rpsResult"></p>
-  <p id="rpsScore">勝:0　負:0　引き分け:0</p>
-  <button id="rpsStartBtn">ゲームスタート</button>
-</div>
-
+</section>
 
   <section>
     <h2>１－８アルバム</h2>
@@ -364,53 +352,6 @@ function showSchedule(key){
   d.classList.add('show');
 }
 
-// --- じゃんけん機能 ---
-const rpsCall = document.getElementById("rpsCall");
-const rpsButtons = document.getElementById("rpsButtons");
-const rpsResult = document.getElementById("rpsResult");
-const rpsScore = document.getElementById("rpsScore");
-const rpsStartBtn = document.getElementById("rpsStartBtn");
-
-let score = { win:0, lose:0, draw:0 };
-const choices = ["グー","チョキ","パー"];
-
-// スタートボタン
-rpsStartBtn.addEventListener("click", () => {
-  rpsCall.textContent = "じゃーんけーん…";
-  rpsButtons.style.display = "flex";
-  rpsResult.textContent = "";
-  rpsCall.classList.remove("animate");
-  void rpsCall.offsetWidth; // 再アニメーションのためのトリガー
-  rpsCall.classList.add("animate");
-});
-
-// 選択ボタンのイベント
-document.querySelectorAll(".rpsChoice").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const player = btn.getAttribute("data-choice"); // datasetより安全
-    if(!player) return;
-    const computer = choices[Math.floor(Math.random()*choices.length)];
-
-    let resultText = `あなた: ${player} / 相手: ${computer} → `;
-    if(player === computer){
-      resultText += "引き分け";
-      score.draw++;
-    } else if(
-      (player==="グー" && computer==="チョキ") ||
-      (player==="チョキ" && computer==="パー") ||
-      (player==="パー" && computer==="グー")
-    ){
-      resultText += "あなたの勝ち！";
-      score.win++;
-    } else {
-      resultText += "あなたの負け…";
-      score.lose++;
-    }
-
-    rpsResult.textContent = resultText;
-    rpsScore.textContent = `勝:${score.win}　負:${score.lose}　引き分け:${score.draw}`;
-  });
-});
 
 
 // --- Firebase 初期化 & 画像共有機能 ---
@@ -483,7 +424,102 @@ modal.addEventListener("click", ()=> {
 });
 </script>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "あなたのAPIキー",
+  authDomain: "あなたのドメイン",
+  projectId: "あなたのプロジェクトID",
+  storageBucket: "あなたのストレージ",
+  messagingSenderId: "あなたのメッセージID",
+  appId: "あなたのAppID"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ここから神経衰弱ゲームのJSを記述 */
+const board = document.querySelector("#memory-game #game-board");
+const statusText = document.querySelector("#memory-game #status");
+const restartBtn = document.querySelector("#memory-game #restart");
+const rankingList = document.querySelector("#memory-game #ranking-list");
+
+const icons = ["🍎","🍌","🍇","🍒","🥝","🍍","🍉","🍑"];
+let firstCard = null, secondCard = null, cards = [], lock = false, matchedCount = 0, startTime;
+
+function initGame() {
+  board.innerHTML = "";
+  matchedCount = 0;
+  statusText.textContent = "カードをめくってペアを探そう！";
+  startTime = Date.now();
+
+  cards = [...icons, ...icons]
+    .sort(() => Math.random() - 0.5)
+    .map((icon, i) => {
+      const div = document.createElement("div");
+      div.classList.add("card");
+      div.dataset.icon = icon;
+      div.dataset.index = i;
+      div.addEventListener("click", flipCard);
+      board.appendChild(div);
+      return div;
+    });
+}
+
+function flipCard() {
+  if(lock || this.classList.contains("flipped")) return;
+  this.textContent = this.dataset.icon;
+  this.classList.add("flipped");
+  if(!firstCard){ firstCard=this; return; }
+  secondCard=this; lock=true;
+  checkMatch();
+}
+
+function checkMatch() {
+  if(firstCard.dataset.icon===secondCard.dataset.icon){
+    firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+    matchedCount++;
+    if(matchedCount===icons.length){
+      const time = ((Date.now()-startTime)/1000).toFixed(1);
+      statusText.textContent = `クリア！おめでとう🎉（${time} 秒）`;
+      saveScore(Number(time));
+    }
+    resetPair();
+  } else {
+    setTimeout(()=>{ firstCard.classList.remove("flipped"); secondCard.classList.remove("flipped"); firstCard.textContent=""; secondCard.textContent=""; resetPair(); }, 900);
+  }
+}
+
+function resetPair(){ firstCard=null; secondCard=null; lock=false; }
+restartBtn.addEventListener("click", initGame);
+initGame();
+
+/* Firestore スコア保存 & ランキング */
+async function saveScore(time){
+  const name = prompt("名前を入力してください（ランキング用）", "ななし");
+  if(!name) return;
+  await addDoc(collection(db,"memory-ranking"),{name:name,time:time,createdAt:Date.now()});
+  loadRanking();
+}
+async function loadRanking(){
+  const q = query(collection(db,"memory-ranking"),orderBy("time","asc"),limit(10));
+  const snap = await getDocs(q);
+  rankingList.innerHTML="";
+  snap.forEach(doc=>{
+    const d = doc.data();
+    const div = document.createElement("div");
+    div.classList.add("rank-item");
+    div.textContent = `${d.name} : ${d.time} 秒`;
+    rankingList.appendChild(div);
+  });
+}
+loadRanking();
+</script>
+
+
+
 </main>
 </body>
 </html>
-
