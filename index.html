@@ -354,7 +354,7 @@ uploadBtn.addEventListener("click", async () => {
   }
 });
 
-db.collection("class-images").orderBy("updatedAt","desc").onSnapshot(snapshot=>{
+db.collection("/class‑images/").orderBy("updatedAt","desc").onSnapshot(snapshot=>{
   gallery.innerHTML="";
   snapshot.forEach(doc=>{
     const data = doc.data();
