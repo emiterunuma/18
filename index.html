@@ -5,216 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>クラス連絡＋画像共有アプリ</title>
 <style>
+/* --- 基本スタイル --- */
 body {
-  box‑sizing: border-box;
-  font-family: system-ui,‑apple-system,"メイリオ",sans-serif;
-  margin:0; padding:20px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "メイリオ", sans-serif;
+  margin: 0; padding: 20px;
   background: linear-gradient(#d6ffd6, #e0f7fa);
-  color:#333;
+  color: #333;
 }
-.container {
-  max-width:900px; margin:0 auto;
-  background:white; border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  overflow:hidden; padding:20px;
-}
-.header {
-  background:#a8d0ff; color:white;
-  padding:30px 20px; text-align:center;
-  border-radius:16px; margin-bottom:10px;
-}
-.header h1 { margin:0; font-size:24px; }
-.bible-text { margin-top:8px; color:black; font-size:16px; line-height:1.5; }
 
+.container {
+  max-width: 900px; margin: 0 auto;
+  background: white; border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: hidden; padding: 20px;
+}
+
+.header {
+  background: #a8d0ff; color: white;
+  padding: 30px 20px; text-align: center;
+  border-radius: 16px; margin-bottom: 10px;
+}
+
+.header h1 { margin: 0; font-size: 24px; }
+.bible-text { margin-top: 8px; color: black; font-size: 16px; line-height: 1.5; }
+
+/* --- メインコンテンツ --- */
 .main-content {
-  display:flex; flex-wrap:wrap;
+  display: flex; flex-wrap: wrap;
+  gap: 20px;
 }
+
 .date-buttons {
-  padding:20px; display:grid; gap:12px; flex:1;
-  border-right:2px solid #e1e8ff; min-width:260px;
+  padding: 20px; display: grid; gap: 12px; flex: 1 1 260px;
+  border-right: 2px solid #e1e8ff;
+  min-width: 260px;
 }
-.date-row { display:flex; gap:8px; align-items:center; }
+
+.date-row { display: flex; gap: 8px; align-items: center; }
 .date-row.horizontal {
-  display:flex; flex-wrap:wrap; justify-content: space-between;
-  margin-bottom:8px;
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  margin-bottom: 8px;
 }
+
 .date-button, .omikuji-button {
-  flex:1; margin:2px;
+  flex: 1; margin: 2px;
 }
-.date-button { background:#b7ffff; border:none; }
+.date-button { background: #b7ffff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
 .omikuji-button {
-  background:#ffc0cb; color:white;
-  border:none; padding:16px 20px;
-  border-radius:12px; font-size:16px;
-  font-weight:500; cursor:pointer;
-  text-align:center;
+  background: #ffc0cb; color: white;
+  border: none; padding: 16px 20px;
+  border-radius: 12px; font-size: 16px;
+  font-weight: 500; cursor: pointer;
+  text-align: center;
 }
 .omikuji-button:hover {
   transform: translateY(-2px);
-  box-shadow:0 6px 20px rgba(255,178,216,0.4);
+  box-shadow: 0 6px 20px rgba(255,178,216,0.4);
 }
+
 .omikuji-result {
-  margin-top:8px; padding:10px;
-  background:#ffffbc; border-radius:8px;
-  border-left:4px solid #fff175;
-  font-size:14px; text-align:center;
-  display:none;
+  margin-top: 8px; padding: 10px;
+  background: #ffffbc; border-radius: 8px;
+  border-left: 4px solid #fff175;
+  font-size: 14px; text-align: center;
+  display: none;
 }
+
 .schedule-display {
-  flex:1; margin:20px; padding:20px;
-  background:#ddffbc; border-radius:12px;
-  border-left:4px solid #7fffbf;
-  display:none; animation:fadeIn 0.3s ease;
+  flex: 2 1 300px; margin: 0; padding: 20px;
+  background: #ddffbc; border-radius: 12px;
+  border-left: 4px solid #7fffbf;
+  display: none; animation: fadeIn 0.3s ease;
 }
-.schedule-display.show { display:block; }
+.schedule-display.show { display: block; }
+
 @keyframes fadeIn {
   from{opacity:0; transform:translateY(10px);}
   to{opacity:1; transform:translateY(0);}
 }
 .schedule-date {
-  font-size:18px; font-weight:600;
-  color:#808080; margin-bottom:15px;
-  padding-bottom:8px; border-bottom:2px solid #e1e8ff;
+  font-size: 18px; font-weight: 600;
+  color: #808080; margin-bottom: 15px;
+  padding-bottom: 8px; border-bottom: 2px solid #e1e8ff;
 }
 .schedule-content {
-  font-size:15px; line-height:1.6; color:#555;
+  font-size: 15px; line-height: 1.6; color: #555;
 }
 .change-item {
-  margin:8px 0; padding:8px 12px;
-  background:white; border-radius:8px;
-  border-left:5px solid #7fff7f;
+  margin: 8px 0; padding: 8px 12px;
+  background: white; border-radius: 8px;
+  border-left: 5px solid #7fff7f;
 }
-.uploader {
-  display:flex; gap:8px; flex-wrap:wrap;
-  align-items:center; margin-top:30px;
-}
+
+/* --- ギャラリー --- */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* iPhoneで3列固定 */
   gap: 10px;
   justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   margin-top: 20px;
 }
 
 .card {
-  width: 110px;       /* 固定幅 */
-  height: 150px;      /* 固定高さ */
+  display: flex;
+  flex-direction: column;
+  width: 120px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 6px;
+  overflow: hidden;
   background: white;
   cursor: pointer;
-  position: relative;
   transition: transform 0.2s;
 }
-
 .card img {
-  width: 100px;       /* 固定サイズ */
-  height: 100px;      /* 正方形で統一 */
+  width: 100%;
+  aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: 6px;
+  border-bottom: 1px solid #eee;
 }
-
 .meta {
-  font-size: 11px;
+  font-size: 12px;
   color: #555;
-  margin-top: 4px;
+  margin: 4px 6px 8px 6px;
   text-align: center;
   white-space: pre-line;
 }
-.card {
-  border:1px solid #ddd; border-radius:8px;
-  padding:8px; background:white;
-  cursor:pointer; position:relative;
-  transition:transform 0.2s;
-}
-.card:hover { transform:scale(1.05); }
-.card img {
-  width:100%; height:140px; object-fit:cover; border-radius:6px;
-}
-.meta {
-  font-size:12px; color:#555; margin-top:6px; white-space:pre-line;
-}
-.delete-btn {
-  position:absolute; top:6px; right:6px;
-  background:red; color:white; border:none;
-  border-radius:4px; padding:2px 6px; font-size:12px;
-  cursor:pointer;
-}
+
+/* --- モーダル --- */
 #modal {
-  display:none; position:fixed; top:0; left:0;
-  width:100%; height:100%; background:rgba(0,0,0,0.8);
-  justify-content:center; align-items:center; z-index:9999;
+  display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+  justify-content: center; align-items: center; z-index: 9999;
 }
-#modal img { max-width:90%; max-height:90%; border-radius:10px; }
-#status { font-size:13px; color:#333; margin-top:5px; }
-button {
-  cursor:pointer; padding:8px 12px; border-radius:6px; border:1px solid #bbb; background:#f7f7f7;
-}
-
-
-#memory-game {
-  margin-top:40px;
-  text-align:center;
-}
-
-#memory-game #game-board {
-  width: min(500px, 90%);
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-#memory-game .card {
-  background: #2d89ef;
-  height: 110px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-size: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-}
-
-#memory-game .card.flipped,
-#memory-game .card.matched {
-  background: #fff;
-  color: #333;
-  cursor: default;
-}
-
-#memory-game #restart {
-  padding: 12px 24px;
-  font-size: 18px;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-#memory-game #ranking {
-  width: min(500px, 95%);
-  margin: 40px auto;
-  background: #fff;
-  padding: 15px;
+#modal img {
+  max-width: 95%;
+  max-height: 90%;
   border-radius: 10px;
-  text-align: left;
 }
 
-#memory-game .rank-item {
-  padding: 4px 0;
-  border-bottom: 1px solid #ddd;
+/* --- iframe --- */
+#drawFrame {
+  width: 100%;
+  height: 800px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 12px;
 }
 
+/* --- ボタン --- */
+button {
+  cursor: pointer; padding: 8px 12px; border-radius: 6px; border: 1px solid #bbb; background: #f7f7f7;
+}
 
+/* --- アップローダー --- */
+.uploader {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  align-items: center; margin-top: 30px;
+}
+#status { font-size: 13px; color: #333; margin-top: 5px; }
 
+/* --- レスポンシブ --- */
+@media(max-width:800px){
+  .main-content { flex-direction: column; }
+  .date-buttons { border-right: none; border-bottom: 2px solid #e1e8ff; padding-bottom: 20px; }
+}
 </style>
 </head>
 <body>
 <main class="container">
   <header class="header">
-    <h1>11月14日（金）</h1>
+    <h1 id="headerDate"></h1>
     <div class="bible-text">Peace Truth LOVE</div>
   </header>
 
@@ -231,7 +192,7 @@ button {
         <button class="date-button" onclick="showSchedule('following')">明後日</button>
       </div>
 
-     <div class="date-row"><button class="date-button" onclick="showSchedule('test1')">11月18日（火）テスト１日目</button></div>
+      <div class="date-row"><button class="date-button" onclick="showSchedule('test1')">11月18日（火）テスト１日目</button></div>
       <div class="date-row"><button class="date-button" onclick="showSchedule('test2')">11月19日（水）テスト２日目</button></div>
       <div class="date-row"><button class="date-button" onclick="showSchedule('test3')">11月20日（木）テスト３日目</button></div>
       <div class="date-row"><button class="date-button" onclick="showSchedule('test4')">11月21日（金）テスト最終日</button></div>
@@ -243,16 +204,10 @@ button {
     </div>
   </div>
 
-<section id="memory-game">
-  <h1>神経衰弱ゲーム</h1>
-  <p id="status">カードをめくってペアを探そう！</p>
-  <div id="game-board"></div>
-  <button id="restart">リスタート</button>
-  <div id="ranking">
-    <h2>ランキング（上位10名）</h2>
-    <div id="ranking-list">読み込み中…</div>
+  <!-- Webページ表示エリア -->
+  <div id="drawArea">
+    <iframe id="drawFrame" src="https://emiterunuma.github.io/shinkei/"></iframe>
   </div>
-</section>
 
   <section>
     <h2>１－８アルバム</h2>
@@ -266,16 +221,22 @@ button {
     <div id="status"></div>
   </section>
 
-<div id="modal"><img id="modalImg" src=""></div>
+  <div id="modal"><img id="modalImg" src=""></div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <script>
-// --- スケジュール・おみくじ機能 ---
+// --- 日付自動更新 ---
+const headerDate = document.getElementById("headerDate");
+const today = new Date();
+const options = { month: 'numeric', day: 'numeric', weekday: 'short' };
+headerDate.textContent = today.toLocaleDateString('ja-JP', options);
+
+// --- スケジュールデータ ---
 const scheduleData = {
-  'today': { date: '11/14(金)', content: '<div class="change-item">５限：数学（もらえました！）</div>' },
+  'today': { date: today.toLocaleDateString('ja-JP', options), content: '<div class="change-item">５限：数学（もらえました！）</div>' },
   'tomorrow': { date: '11/15(土)', content: '<div class="change-item">３限：聖書⇒？？</div>' },
   'following': { date: '11/16(日)', content: '<div class="change-item">ひたすらテスト勉強</div>' },
   'test1': { date: '11/18(火)', content:  '<div class="change-item">１限：言語文化</div><div class="change-item">２限：地理総合</div>' },
@@ -284,7 +245,16 @@ const scheduleData = {
   'test4': { date: '11/21(金)', content:  '<div class="change-item">１限：歴史総合</div><div class="change-item">2限：数学ⅠA</div>' }
 };
 
+function showSchedule(key){
+  const d = document.getElementById('scheduleDisplay');
+  const dd = document.getElementById('scheduleDate');
+  const c = document.getElementById('scheduleContent');
+  dd.textContent = scheduleData[key].date;
+  c.innerHTML = scheduleData[key].content;
+  d.classList.add('show');
+}
 
+// --- おみくじ ---
 const omikujiResults = [
   {name:'凶',text:'ケール 食べて！'},
   {name:'吉',text:'アサイーボウル'},
@@ -295,7 +265,6 @@ const omikujiResults = [
 ];
 
 function getTodayKey(){
-  const today=new Date();
   return today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 }
 function getDrawCount(){
@@ -343,18 +312,7 @@ function drawOmikuji(){
   }
 }
 
-function showSchedule(key){
-  const d = document.getElementById('scheduleDisplay');
-  const dd = document.getElementById('scheduleDate');
-  const c = document.getElementById('scheduleContent');
-  dd.textContent = scheduleData[key].date;
-  c.innerHTML = scheduleData[key].content;
-  d.classList.add('show');
-}
-
-
-
-// --- Firebase 初期化 & 画像共有機能 ---
+// --- Firebase 初期化 & 画像共有 ---
 const firebaseConfig = {
   apiKey: "AIzaSyBSZkU6GaWz2stkLKjcCJEm_8uEhMEG98s",
   authDomain: "shion-b9c2a.firebaseapp.com",
@@ -363,7 +321,6 @@ const firebaseConfig = {
   messagingSenderId: "236221572207",
   appId: "1:236221572207:web:ee9e5b510fbbc3722c999a"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
@@ -386,7 +343,7 @@ uploadBtn.addEventListener("click", async () => {
     const ref = storage.ref("class-images/"+name+"-"+Date.now());
     await ref.put(file);
     const url = await ref.getDownloadURL();
-    await db.collection("class‑images").add({ username:name, url:url, updatedAt:new Date() });
+    await db.collection("class-images").add({ username:name, url:url, updatedAt:new Date() });
     status.textContent="アップロード完了！";
     fileInput.value="";
   }catch(e){
@@ -397,7 +354,7 @@ uploadBtn.addEventListener("click", async () => {
   }
 });
 
-db.collection("class‑images").orderBy("updatedAt","desc").onSnapshot(snapshot=>{
+db.collection("class-images").orderBy("updatedAt","desc").onSnapshot(snapshot=>{
   gallery.innerHTML="";
   snapshot.forEach(doc=>{
     const data = doc.data();
@@ -422,103 +379,10 @@ modal.addEventListener("click", ()=> {
   modal.style.display="none";
   modalImg.src="";
 });
+
+// --- 初期表示で今日のスケジュールを表示 ---
+showSchedule('today');
 </script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "あなたのAPIキー",
-  authDomain: "あなたのドメイン",
-  projectId: "あなたのプロジェクトID",
-  storageBucket: "あなたのストレージ",
-  messagingSenderId: "あなたのメッセージID",
-  appId: "あなたのAppID"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-/* ここから神経衰弱ゲームのJSを記述 */
-const board = document.querySelector("#memory-game #game-board");
-const statusText = document.querySelector("#memory-game #status");
-const restartBtn = document.querySelector("#memory-game #restart");
-const rankingList = document.querySelector("#memory-game #ranking-list");
-
-const icons = ["🍎","🍌","🍇","🍒","🥝","🍍","🍉","🍑"];
-let firstCard = null, secondCard = null, cards = [], lock = false, matchedCount = 0, startTime;
-
-function initGame() {
-  board.innerHTML = "";
-  matchedCount = 0;
-  statusText.textContent = "カードをめくってペアを探そう！";
-  startTime = Date.now();
-
-  cards = [...icons, ...icons]
-    .sort(() => Math.random() - 0.5)
-    .map((icon, i) => {
-      const div = document.createElement("div");
-      div.classList.add("card");
-      div.dataset.icon = icon;
-      div.dataset.index = i;
-      div.addEventListener("click", flipCard);
-      board.appendChild(div);
-      return div;
-    });
-}
-
-function flipCard() {
-  if(lock || this.classList.contains("flipped")) return;
-  this.textContent = this.dataset.icon;
-  this.classList.add("flipped");
-  if(!firstCard){ firstCard=this; return; }
-  secondCard=this; lock=true;
-  checkMatch();
-}
-
-function checkMatch() {
-  if(firstCard.dataset.icon===secondCard.dataset.icon){
-    firstCard.classList.add("matched");
-    secondCard.classList.add("matched");
-    matchedCount++;
-    if(matchedCount===icons.length){
-      const time = ((Date.now()-startTime)/1000).toFixed(1);
-      statusText.textContent = `クリア！おめでとう🎉（${time} 秒）`;
-      saveScore(Number(time));
-    }
-    resetPair();
-  } else {
-    setTimeout(()=>{ firstCard.classList.remove("flipped"); secondCard.classList.remove("flipped"); firstCard.textContent=""; secondCard.textContent=""; resetPair(); }, 900);
-  }
-}
-
-function resetPair(){ firstCard=null; secondCard=null; lock=false; }
-restartBtn.addEventListener("click", initGame);
-initGame();
-
-/* Firestore スコア保存 & ランキング */
-async function saveScore(time){
-  const name = prompt("名前を入力してください（ランキング用）", "ななし");
-  if(!name) return;
-  await addDoc(collection(db,"memory-ranking"),{name:name,time:time,createdAt:Date.now()});
-  loadRanking();
-}
-async function loadRanking(){
-  const q = query(collection(db,"memory-ranking"),orderBy("time","asc"),limit(10));
-  const snap = await getDocs(q);
-  rankingList.innerHTML="";
-  snap.forEach(doc=>{
-    const d = doc.data();
-    const div = document.createElement("div");
-    div.classList.add("rank-item");
-    div.textContent = `${d.name} : ${d.time} 秒`;
-    rankingList.appendChild(div);
-  });
-}
-loadRanking();
-</script>
-
-
 
 </main>
 </body>
