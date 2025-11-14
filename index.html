@@ -343,7 +343,7 @@ uploadBtn.addEventListener("click", async () => {
     const ref = storage.ref("class-images/"+name+"-"+Date.now());
     await ref.put(file);
     const url = await ref.getDownloadURL();
-    await db.collection("class-images").add({ username:name, url:url, updatedAt:new Date() });
+    await db.collection("class‑images").add({ username:name, url:url, updatedAt:new Date() });
     status.textContent="アップロード完了！";
     fileInput.value="";
   }catch(e){
