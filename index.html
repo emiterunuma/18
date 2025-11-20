@@ -235,14 +235,33 @@ const headerDate = document.getElementById("headerDate");
 const today = new Date();
 const options = { month: 'numeric', day: 'numeric', weekday: 'short' };
 headerDate.textContent = today.toLocaleDateString('ja-JP', options);
+  
+// 明日・明後日の自動計算
+const tomorrowDate = new Date(today);
+tomorrowDate.setDate(today.getDate() + 1);
+
+const followingDate = new Date(today);
+followingDate.setDate(today.getDate() + 2);
+
+const tomorrowStr = tomorrowDate.toLocaleDateString('ja-JP', options);
+const followingStr = followingDate.toLocaleDateString('ja-JP', options);
 
 // --- スケジュールデータ ---
 const scheduleData = {
-  'today': { date: today.toLocaleDateString('ja-JP', options), content: '<<div class="change-item">２限：化学基礎</div><div class="change-item">４限：音楽 / 美術</div><div class="change-item">６限：化学基礎</div>' },
-  'tomorrow': { date: '11/18(火)', content: '<div class="change-item">１限：言語文化</div><div class="change-item">２限：地理総合</div>' },
-  'following': { date: '11/19(水)', content: '<<div class="change-item">１限：英語CⅠ</div><div class="change-item">２限：化学基礎</div>' },
-  'test1': { date: '11/18(火)', content:  '<div class="change-item">１限：言語文化</div><div class="change-item">２限：地理総合</div>' },
-  'test2': { date: '11/19(水)', content:  '<div class="change-item">１限：英語CⅠ</div><div class="change-item">２限：化学基礎</div>' },
+  'today': {
+    date: today.toLocaleDateString('ja-JP', options),
+    content: '<div class="change-item">２限：化学基礎</div><div class="change-item">４限：音楽 / 美術</div><div class="change-item">６限：化学基礎</div>'
+  },
+  'tomorrow': {
+    date: tomorrowStr,
+    content: '<div class="change-item">１限：言語文化</div><div class="change-item">２限：地理総合</div>'
+  },
+  'following': {
+    date: followingStr,
+    content: '<div class="change-item">１限：英語CⅠ</div><div class="change-item">２限：化学基礎</div>'
+  },
+
+ 
   'test3': { date: '11/20(木)', content:  '<div class="change-item">１限：現代の国語</div><div class="change-item">２限：論理表現</div><div class="change-item">３限：音楽 / 美術</div>' },
   'test4': { date: '11/21(金)', content:  '<div class="change-item">１限：歴史総合</div><div class="change-item">2限：数学ⅠA</div>' }
 };
