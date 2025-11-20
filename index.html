@@ -192,8 +192,7 @@ button {
         <button class="date-button" onclick="showSchedule('following')">明後日</button>
       </div>
 
-      <div class="date-row"><button class="date-button" onclick="showSchedule('test1')">11月18日（火）テスト１日目</button></div>
-      <div class="date-row"><button class="date-button" onclick="showSchedule('test2')">11月19日（水）テスト２日目</button></div>
+ 
       <div class="date-row"><button class="date-button" onclick="showSchedule('test3')">11月20日（木）テスト３日目</button></div>
       <div class="date-row"><button class="date-button" onclick="showSchedule('test4')">11月21日（金）テスト最終日</button></div>
     </section>
@@ -250,15 +249,15 @@ const followingStr = followingDate.toLocaleDateString('ja-JP', options);
 const scheduleData = {
   'today': {
     date: today.toLocaleDateString('ja-JP', options),
-    content: '<div class="change-item">２限：化学基礎</div><div class="change-item">４限：音楽 / 美術</div><div class="change-item">６限：化学基礎</div>'
+    content: '<div class="change-item">１限：現代の国語</div><div class="change-item">２限：論理表現</div><div class="change-item">３限：音楽 / 美術</div>'
   },
   'tomorrow': {
     date: tomorrowStr,
-    content: '<div class="change-item">１限：言語文化</div><div class="change-item">２限：地理総合</div>'
+    content: '<div class="change-item">１限：歴史総合</div><div class="change-item">2限：数学ⅠA</div>'
   },
   'following': {
     date: followingStr,
-    content: '<div class="change-item">１限：英語CⅠ</div><div class="change-item">２限：化学基礎</div>'
+    content: '<div class="change-item">クラスCMの内容決まってますか？</div>'
   },
 
  
