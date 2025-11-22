@@ -248,19 +248,18 @@ const followingStr = followingDate.toLocaleDateString('ja-JP', options);
 const scheduleData = {
   'today': {
     date: today.toLocaleDateString('ja-JP', options),
-    content: '<div class="change-item">１限：歴史総合</div><div class="change-item">2限：数学ⅠA</div>'
+    content: '<div class="change-item">時間割変更はありません</div><div class="change-item">クラスCMの内容は決まっていますか？</div>'
   },
   'tomorrow': {
     date: tomorrowStr,
-    content: '<div class="change-item">時間割変更はありません</div><div class="change-item">クラスCMの内容は決まっていますか？</div>'
+    content: '<div class="change-item">日曜日＆勤労感謝の日</div><div class="change-item">１－８のいいところを考えよう</div>'
   },
   'following': {
     date: followingStr,
-    content: '<div class="change-item">日曜日</div>'
+    content: '<div class="change-item">振替休日</div><div class="change-item">CMの配役、どうしましょう</div>'
   },
 
- 
-  'test4': { date: '11/21(金)', content:  '<div class="change-item">１限：歴史総合</div><div class="change-item">2限：数学ⅠA</div>' }
+
 };
 
 function showSchedule(key){
